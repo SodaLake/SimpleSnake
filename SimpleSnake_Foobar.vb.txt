@@ -1,0 +1,160 @@
+﻿
+'SimpleSnake: 개선된 뱀 이동, 방향틀때 이미지변경
+'객체지향 일부러안씀
+'참조형태로 리스트에 넣으려고 Structure 대신 Class로 구현하였다.
+Class SnakeBody
+    Public x As Integer
+    Public y As Integer
+    Public rotation As Integer
+    Public bodyShapeIndex As Integer
+    Public Sub New(x As Integer, y As Integer)
+        Me.x = x
+        Me.y = y
+        Me.rotation = 0
+        Me.bodyShapeIndex = 12
+    End Sub
+End Class
+
+
+
+Module SimpleSnake_Foobar
+
+    Dim keys(255) As Boolean
+    Dim shapes() As Char = {"▲"c, "▶"c, "▼"c, "◀"c, "▽"c, "◁"c, "△"c, "▷"c, "└"c, "┌"c, "┐"c, "┘"c, "│"c, "─"c}
+
+    Dim snake As List(Of SnakeBody)
+
+    Dim directionX As Integer
+    Dim directionY As Integer
+    '============================
+    Function GetKeyState(key As ConsoleKey)
+        Return keys(key)
+    End Function
+
+    Sub ProcessInput()
+        ' 후진방지: X방향으로 움직이고 있을 땐 Y축방향 입력만 받고 Y축방향으로 움직이고 있을 땐 X축방향 입력만 받으면 해결된다.
+        If directionX = 0 Then
+            If GetKeyState(ConsoleKey.A) = True Then
+                directionX = -1
+                directionY = 0
+            ElseIf GetKeyState(ConsoleKey.D) = True Then
+                directionX = 1
+                directionY = 0
+            End If
+        ElseIf directionY = 0 Then
+            If GetKeyState(ConsoleKey.W) = True Then
+
+                directionY = -1
+                directionX = 0
+            ElseIf GetKeyState(ConsoleKey.S) = True Then
+                directionY = 1
+                directionX = 0
+            End If
+        End If
+    End Sub
+
+    Sub Render()
+        '설명을 출력한다.
+        Console.SetCursorPosition(0, 0)
+        Console.WriteLine("간단한 Snake 이동,회전 알고리즘 By Foobar")
+        Console.WriteLine("ESC: 프로그램종료")
+        '머리를 그린다.
+        Console.SetCursorPosition(snake.First.x * 2, snake.First.y)
+        Console.Write(shapes(snake.First.rotation))
+        '꼬리를 그린다.
+        Console.SetCursorPosition(snake.Last.x * 2, snake.Last.y)
+        Console.Write(shapes(snake(snake.Count - 2).rotation + 4))
+        '업데이트 함수에서 설정한 각각의 index에 따라 나머지를 그린다. 
+        For i = 1 To snake.Count - 2
+
+            Console.SetCursorPosition(snake(i).x * 2, snake(i).y)
+            Console.Write(shapes(snake(i).bodyShapeIndex))
+        Next
+
+
+    End Sub
+
+    Sub Update()
+        For i = 0 To 255
+            keys(i) = False
+        Next
+        Do While Console.KeyAvailable = True
+            keys(Console.ReadKey(True).Key) = True
+        Loop
+        ProcessInput()
+
+        '꼬리에다가 이동 처리하고 머리로 붙일거임. 
+
+        'tail: 현재 꼬리. 다음 프레임에 머리가 될 부분. 이제 다음프레임 머리라고 칭함
+        'head: 현재 머리. 다음 프레임에는 머리 뒤가 됨. 
+        Dim tail As SnakeBody = snake.Last
+        Dim head As SnakeBody = snake.First
+
+        'direction(사용자가 입력한 방향) 에 따라 꼬리의 좌표를 설정한다.
+        tail.x = head.x + directionX
+        tail.y = head.y + directionY
+        '회전값을 설정한다.(회전 이미지 처리하기 위함) 위쪽 0 오른쪽 1 아래 2 왼쪽 3으로 설정된다.
+        tail.rotation = Math.Atan2(directionY, directionX) / Math.PI * 2 + 1
+
+        '다음프레임 머리와 현재프레임 머리의 회전방향이 다른지 본다. 다르다면 회전한것이고 같다면 직진하는것이다.
+        '회전하는 경우
+        If tail.rotation <> head.rotation Then
+            '현재 머리 기준으로 오른쪽으로 회전하는지 왼쪽으로 회전하는지 판단하며 표시할 이미지 인덱스를 설정한다.
+            Dim rotationDifference As Integer = tail.rotation - head.rotation
+
+            If rotationDifference = -1 Or rotationDifference = 3 Then
+                head.bodyShapeIndex = ((tail.rotation + 3) Mod 4) + 8
+
+            ElseIf rotationDifference = 1 Or rotationDifference = -3 Then
+                head.bodyShapeIndex = tail.rotation + 8
+            End If
+        Else
+            '회전하지 않는 경우, 진행방향이 가로인지 세로인지에 따라 인덱스를 │ ─ 중 하나로 설정한다. 몸을 정사각형으로 표시할거라면 구현 안해도 되는부분
+            head.bodyShapeIndex = (tail.rotation Mod 2) + 12
+        End If
+
+
+
+        snake.RemoveAt(snake.Count - 1)
+        snake.Insert(0, tail)
+
+
+
+        'Console.Write()
+    End Sub
+
+
+
+    Sub Main()
+
+        directionX = 1
+        directionY = 0
+
+        snake = New List(Of SnakeBody)
+        snake.Add(New SnakeBody(15, 5))
+        snake.Add(New SnakeBody(15, 6))
+        snake.Add(New SnakeBody(15, 7))
+        snake.Add(New SnakeBody(15, 8))
+        snake.Add(New SnakeBody(15, 9))
+        snake.Add(New SnakeBody(15, 10))
+        snake.Add(New SnakeBody(15, 11))
+        snake.Add(New SnakeBody(15, 12))
+        snake.Add(New SnakeBody(15, 13))
+        snake.Add(New SnakeBody(15, 14))
+        snake.Add(New SnakeBody(15, 15))
+        snake.Add(New SnakeBody(15, 16))
+        snake.Add(New SnakeBody(15, 17))
+
+
+
+        Do While GetKeyState(ConsoleKey.Escape) = False
+            Render()
+            Update()
+            Threading.Thread.Sleep(150)
+            Console.Clear()
+        Loop
+
+
+    End Sub
+
+End Module

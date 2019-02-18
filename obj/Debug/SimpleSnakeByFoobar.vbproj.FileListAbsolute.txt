@@ -1,0 +1,11 @@
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\bin\Debug\SimpleSnakeByFoobar.exe.config
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\bin\Debug\SimpleSnakeByFoobar.exe
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\bin\Debug\SimpleSnakeByFoobar.pdb
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\bin\Debug\SimpleSnakeByFoobar.xml
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.vbprojResolveAssemblyReference.cache
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.Resources.resources
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.vbproj.GenerateResource.cache
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.vbproj.CoreCompileInputs.cache
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.exe
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.xml
+C:\Users\pkr2\Desktop\VBStudy\SimpleSnakeByFoobar\SimpleSnakeByFoobar\obj\Debug\SimpleSnakeByFoobar.pdb
